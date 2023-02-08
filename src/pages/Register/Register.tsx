@@ -1,40 +1,57 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import Input from 'src/components/input'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
 
 import { schema, Schema } from 'src/utils/rules'
+import Input from 'src/components/input'
+import { registerAccount } from 'src/apis/auth.api'
+import { omit } from 'lodash'
+import { error } from 'console'
+import { isAxiosUnprocessableEntyError } from 'src/utils/checkError'
+import { ResponsiveApis } from 'src/types/untils.type'
+import { setegid } from 'process'
 
 type FormData = Schema
-
-// interface FormData {
-//   email: string
-//   password: string
-//   confirm_password: string
-// }
 
 export default function Register() {
   const {
     register,
     handleSubmit,
-    getValues,
+    setError,
     formState: { errors }
   } = useForm<FormData>({
     resolver: yupResolver(schema)
   })
+  const registerAccountMutation = useMutation({
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
+  })
 
-  // const rules = getRules(getValues)
-
-  const onSubmit = handleSubmit(
-    (data) => {
-      console.log(data)
-    },
-    () => {
-      const passWord = getValues('password')
-      console.log('password>>>', passWord)
-    }
-  )
-  // console.log('check Error>>>', errors)
+  const onSubmit = handleSubmit((data) => {
+    const body = omit(data, ['confirm_password'])
+    registerAccountMutation.mutate(body, {
+      onSuccess: (data) => {
+        console.log(data)
+      },
+      onError: (error) => {
+        if (isAxiosUnprocessableEntyError<ResponsiveApis<Omit<FormData, 'confirm_password'>>>(error)) {
+          const formError = error.response?.data.data
+          if (formError?.email) {
+            setError('email', {
+              message: formError.email,
+              type: 'sever'
+            })
+          }
+          if (formError?.password) {
+            setError('password', {
+              message: formError.password,
+              type: 'sever'
+            })
+          }
+        }
+      }
+    })
+  })
 
   const bg = '/public/Img/LoginRegister/Bg-login-register.png'
   return (
@@ -85,35 +102,7 @@ export default function Register() {
                 type='password'
                 errorMEssage={errors.confirm_password?.message}
               />
-              {/* <div className='mt-8'>
-                <input
-                  placeholder='email'
-                  type='email'
-                  className='w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-                  {...register('email', rules.email)}
-                />
-                <div className=' mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.email?.message}</div>
-              </div> */}
-              {/* <div className='mt-2'>
-                <input
-                  placeholder='password'
-                  type='password'
-                  autoComplete='on'
-                  className='w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-                  {...register('password', rules.password)}
-                />
-                <div className=' mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.password?.message}</div>
-              </div> */}
-              {/* <div className='mt-2'>
-                <input
-                  placeholder='confirm_password'
-                  type='password'
-                  autoComplete='on'
-                  className='w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-                  {...register('confirm_password', rules.confirm_password)}
-                />
-                <div className=' mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.confirm_password?.message}</div>
-              </div> */}
+
               <div className='mt-2'>
                 <button
                   type='submit'

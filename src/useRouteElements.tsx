@@ -5,6 +5,7 @@ import RegisterLayout from './layouts/RegisterLayout'
 import Login from './pages/Login'
 import ProductList from './pages/ProductList'
 import Register from './pages/Register'
+import mainLayout from './layouts/mainLayout'
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
