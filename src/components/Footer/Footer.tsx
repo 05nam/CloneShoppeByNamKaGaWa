@@ -143,17 +143,17 @@ export default function Footer() {
           <div className='mt-10 mb-5 text-xs font-bold'> THEO DÕI CHÚNG TÔI TRÊN</div>
           <ul>
             <li className='mt-3 '>
-              <a href='http/#'>
+              <a href='https://www.facebook.com/ShopeeVN' target={'blank'}>
                 <i className='fa-brands fa-facebook mr-3 '></i> <span className='hover:text-red-500'>Facebook</span>
               </a>
             </li>
             <li className='mt-3 '>
-              <a href='top#'>
+              <a href='https://www.instagram.com/Shopee_VN/' target={'blank'}>
                 <i className='fa-brands fa-instagram mr-3'></i> <span className='hover:text-red-500'>Istagram</span>
               </a>
             </li>
             <li className='mt-3 '>
-              <a href='top#'>
+              <a href='https://www.linkedin.com/company/shopee/' target={'blank'}>
                 <i className='fa-brands fa-linkedin mr-3 '> </i> <span className='hover:text-red-500'>Linkedin</span>
               </a>
             </li>
