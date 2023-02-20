@@ -1,27 +1,22 @@
-import { FloatingPortal, useFloating, arrow } from '@floating-ui/react'
-import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import PopOver from '../PopOver'
 
 export default function HeaderMain() {
-  const [open, setOpen] = useState(true)
-  const arrowRef = useRef<HTMLElement>(null)
-  const { x, y, strategy, refs, middlewareData } = useFloating({
-    middleware: [arrow({ element: arrowRef })]
-  })
-  const showPopover = () => {
-    setOpen(true)
-  }
-  const hidePopover = () => {
-    setOpen(false)
-  }
   return (
     <div className=' pd-5 bg-[linear-gradient(-180deg,#f53d2d,#f63)] pt-2 text-white'>
       <div className='container'>
         <div className='flex justify-end'>
-          <div
+          {/* popOver tieng viet/tieng anh  */}
+          <PopOver
             className='flex cursor-pointer items-center py-1 hover:text-gray-300'
-            ref={refs.setReference}
-            onMouseEnter={showPopover}
-            onMouseLeave={hidePopover}
+            renderPopOver={
+              <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
+                <div className='flex flex-col py-2 pr-28 pl-3'>
+                  <button className='py-2 px-3 hover:text-orange'> Tiếng Việt </button>
+                  <button className='mt-3 py-2 px-3 hover:text-orange'> Enghlish</button>
+                </div>
+              </div>
+            }
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -48,36 +43,31 @@ export default function HeaderMain() {
             >
               <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
             </svg>
-          </div>
-          <FloatingPortal>
-            {open && (
-              <div
-                ref={refs.setFloating}
-                style={{
-                  position: strategy,
-                  top: y ?? 0,
-                  left: x ?? 0,
-                  width: 'max-content'
-                }}
-              >
-                <span
-                  ref={arrowRef}
-                  className=' absolute -translate-y-full border-[11px] border-white border-x-transparent border-t-transparent '
-                  style={{
-                    left: middlewareData.arrow?.x,
-                    top: middlewareData.arrow?.y
-                  }}
-                ></span>
-                <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
-                  <div className='flex flex-col py-2 px-3'>
-                    <button className='py-2 px-3 hover:text-orange'> Tiếng Việt </button>
-                    <button className='mt-3 py-2 px-3 hover:text-orange'> Enghlish</button>
-                  </div>
-                </div>
+          </PopOver>
+          <PopOver
+            className='flex cursor-pointer items-center py-1 hover:text-gray-300'
+            renderPopOver={
+              <div>
+                <Link
+                  to='/'
+                  className='block w-full bg-white py-2 px-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                >
+                  {' '}
+                  Tài Khoản của tôi{' '}
+                </Link>
+                <Link
+                  to='/'
+                  className='block w-full bg-white py-2 px-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                >
+                  {' '}
+                  Đơn mua
+                </Link>
+                <button className='block w-full bg-white py-2 px-3 text-left hover:bg-slate-100 hover:text-cyan-500'>
+                  Đăng xuất
+                </button>
               </div>
-            )}
-          </FloatingPortal>
-          <div className='flex cursor-pointer items-center py-1 hover:text-gray-300'>
+            }
+          >
             <div className='mr-2 h-6 w-6 flex-shrink-0'>
               <img
                 src='https://lh3.googleusercontent.com/ogw/AAEL6sh7AJt5qHE7k0XJddTReT9P0yA7Ayd8ByG1DKXUSg=s64-c-mo'
@@ -86,7 +76,7 @@ export default function HeaderMain() {
               />
             </div>
             <div>Nguyen Tan Nam</div>
-          </div>
+          </PopOver>
         </div>
         <div className=' mt-4 grid grid-cols-12  items-center gap-4 '>
           <div className='col-span-2 '>
