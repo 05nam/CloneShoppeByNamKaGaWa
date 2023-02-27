@@ -9,6 +9,7 @@ import { isAxiosUnprocessableEntyError } from 'src/utils/checkError'
 import Input from 'src/components/input'
 import { useContext } from 'react'
 import { AppContext } from 'src/components/contexts/app.Context'
+import Button from 'src/components/Button'
 
 type FormData = Omit<Schema, 'confirm_password'>
 const schemaLogin = schema.omit(['confirm_password'])
@@ -79,14 +80,7 @@ export default function Login() {
               noValidate
             >
               <div className='text-2xl'>Đăng Nhập</div>
-              {/* <div className='mt-8'>
-                <input
-                  placeholder='email'
-                  type='email'
-                  name='email'
-                  className='w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-                />
-              </div> */}
+
               <Input
                 name='email'
                 clasName='mt-8'
@@ -103,23 +97,16 @@ export default function Login() {
                 type='password'
                 errorMEssage={errors.password?.message}
               />
-              {/* <div className='mt-3'>
-                <input
-                  placeholder='password'
-                  type='password'
-                  name='password'
-                  autoComplete='on'
-                  className='w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-                />
-              </div> */}
 
               <div className='mt-3'>
-                <button
+                <Button
+                  isLoading={loginMutation.isLoading}
+                  disabled={loginMutation.isLoading}
                   type='submit'
                   className='w-full bg-red-500 py-4 px-2 text-center text-sm uppercase text-white hover:bg-red-600'
                 >
                   Đăng Nhập
-                </button>
+                </Button>
               </div>
               <div className='mt-8 '>
                 <div className='flex items-center justify-center'>
