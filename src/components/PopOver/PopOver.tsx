@@ -12,7 +12,8 @@ export default function PopOver({ children, renderPopOver, className }: Props) {
   const [open, setOpen] = useState(false)
   const arrowRef = useRef<HTMLElement>(null)
   const { x, y, strategy, refs, middlewareData } = useFloating({
-    middleware: [offset(5), shift(), arrow({ element: arrowRef })]
+    middleware: [offset(5), shift(), arrow({ element: arrowRef })],
+    placement: 'bottom-end'
   })
   const showPopover = () => {
     setOpen(true)

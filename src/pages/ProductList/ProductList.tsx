@@ -5,7 +5,7 @@ import HeaderMain from 'src/components/HeaderMain'
 export default function ProductList() {
   return (
     <div>
-      <HeaderMain />
+      {/* <HeaderMain /> */}
       <Footer />
     </div>
   )

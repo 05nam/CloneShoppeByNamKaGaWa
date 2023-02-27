@@ -1,16 +1,20 @@
 import { schema, Schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { login } from 'src/apis/auth.api'
-import { ResponsiveApis } from 'src/types/untils.type'
+import { ErrorResponse } from 'src/types/untils.type'
 import { isAxiosUnprocessableEntyError } from 'src/utils/checkError'
 import Input from 'src/components/input'
+import { useContext } from 'react'
+import { AppContext } from 'src/components/contexts/app.Context'
 
 type FormData = Omit<Schema, 'confirm_password'>
 const schemaLogin = schema.omit(['confirm_password'])
 export default function Login() {
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     register,
     setError,
@@ -26,10 +30,12 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
+        setIsAuthenticated(true)
+        navigate('/profile')
         console.log(data)
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntyError<ResponsiveApis<FormData>>(error)) {
+        if (isAxiosUnprocessableEntyError<ErrorResponse<FormData>>(error)) {
           const formError = error.response?.data.data
           if (formError?.email) {
             setError('email', {

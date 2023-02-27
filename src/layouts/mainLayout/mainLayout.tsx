@@ -5,7 +5,7 @@ interface props {
   children?: React.ReactNode
 }
 
-export default function mainLayout({ children }: props) {
+export default function MainLayout({ children }: props) {
   return (
     <div className=''>
       <HeaderMain />
