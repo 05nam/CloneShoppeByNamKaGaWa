@@ -3,7 +3,8 @@ import { AxiosInstance } from 'axios'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { toast } from 'react-toastify'
 import { AuthReponse } from 'src/types/auth.type'
-import { clearAccessTokenFromLS, getAccesTokenFromLS, saveAccessTokenToLS } from './Auth'
+import { clearS, getAccesTokenFromLS, setAccessTokenToLS, setProfileFromLS } from './Auth'
+import Path from 'src/constants/Path'
 
 class Http {
   instance: AxiosInstance
@@ -36,12 +37,14 @@ class Http {
         // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
         // Làm gì đó với dữ liệu response
         const { url } = response.config
-        if (url === '/login' || url === '/register') {
-          this.accessToken = (response.data as AuthReponse).data.access_token
-          saveAccessTokenToLS(this.accessToken)
-        } else if (url === '/logout') {
+        if (url === Path.login || url === Path.register) {
+          const data = response.data as AuthReponse
+          this.accessToken = data.data.access_token
+          setAccessTokenToLS(this.accessToken)
+          setProfileFromLS(data.data.user)
+        } else if (url === Path.logout) {
           this.accessToken = ''
-          clearAccessTokenFromLS()
+          clearS()
         }
         return response
       },
