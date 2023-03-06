@@ -4,7 +4,6 @@ import LoginLayout from './layouts/LoginLayout'
 import RegisterLayout from './layouts/RegisterLayout'
 import Login from './pages/Login'
 import ProductList from './pages/ProductList'
-import Profile from './pages/Profile'
 import Register from './pages/Register'
 import MainLayout from './layouts/MainLayout'
 import { useContext } from 'react'
@@ -38,7 +37,7 @@ export default function useRouteElements() {
           path: Path.profile,
           element: (
             <MainLayout>
-              <Profile />
+              <ProductList />
             </MainLayout>
           )
         }
