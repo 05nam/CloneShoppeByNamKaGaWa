@@ -79,7 +79,7 @@ export default function AsideFilter() {
               placeholder='₫ ĐẾN'
             />
           </div>
-          <Button className='  hover:bg-orange-80 flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white'>
+          <Button className='   flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80'>
             {' '}
             ÁP DỤNG{' '}
           </Button>
@@ -160,7 +160,7 @@ export default function AsideFilter() {
         </ul>
       </div>
       <div className=' my-4 h-[4px] bg-slate-600' />
-      <Button className='  hover:bg-orange-80 flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white'>
+      <Button className='  flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80'>
         {' '}
         Xóa tất cả{' '}
       </Button>
